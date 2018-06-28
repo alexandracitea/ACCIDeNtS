@@ -1,0 +1,86 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+
+.threeTables{
+    width: 100px;
+    display: inline;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+        ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+    border-right:1px solid #bbb;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: red;
+}
+
+#details {
+    position: relative;
+}
+
+.detailsTable {
+    display: block;
+}
+
+.False{
+    background-color:red;
+}
+
+.True{
+    background-color:green;
+}
+
+.split {
+    height: 80%;
+    position: fixed;
+    top: 15%;
+    padding-top: 20px;
+}
+
+.left {
+    left: 1%;
+    background-color: white;
+    width: 40%;
+}
+
+.right {
+    right: 3%;
+    width: 50%;
+    background-color: white;
+}

@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'map/style.css' %}"/>
+</head>
+<body>
+<ul>
+  <li><a class="active" href="/map/">Map</a></li>
+  <li><a href="/map/accidents">Records</a></li>
+  <li style="float:right"><a href="/admin/">Admin</a></li>
+</ul>
+
+<div id="map" style="width:100%;height:500px"></div>
+
+<script>
+function myMap() {
+  var myCenter = new google.maps.LatLng(45.983611,24.695278);
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {center: myCenter, zoom: 7};
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+    {% for incident in all_incidents %}
+        var pointFromDatabase = new google.maps.LatLng({{ incident.latitude }}, {{ incident.longitude }});
+        var marker = new google.maps.Marker({position:pointFromDatabase});
+        marker.setMap(map);
+    {% endfor %}
+    {% for unit in all_units %}
+        var pointFromDatabase = new google.maps.LatLng({{ unit.latitude }}, {{ unit.longitude }});
+        var marker = new google.maps.Marker({position:pointFromDatabase, icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'});
+        marker.setMap(map);
+    {% endfor %}
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7gKAeypztau4W__g4aRh6cgp9nwZm0so&callback=myMap"></script>
+
+</body>
+</html>

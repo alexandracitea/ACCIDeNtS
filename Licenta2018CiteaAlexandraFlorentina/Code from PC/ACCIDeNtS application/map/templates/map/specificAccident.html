@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'map/style.css' %}"/>
+    <script>
+        function changeColor(){
+            element = document.getElementById("isResolved");
+            if (element.classList.contains("False")){
+                element.classList.remove("False");
+                element.classList.add("True");
+            } else if (element.classList.contains("True")){
+                element.classList.remove("True");
+                element.classList.add("False");
+            }
+        }
+        function calculateDistance(){
+
+            document.getElementById('distance').innerHTML = total;
+        }
+    </script>
+</head>
+<body>
+
+<table class="threeTables detailsTable">
+    <h1>Details</h1>
+  <tr>
+    <th>ID</th>
+    <th>Priority</th>
+    <th>Timestamp</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>Resolve</th>
+  </tr>
+    {% for item in specific_incident %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td>{{ item.accidentsPriority }}</td>
+    <td>{{ item.timestamp }}</td>
+    <td>{{ item.latitude }}</td>
+    <td>{{ item.longitude }}</td>
+    <td id="isResolved" class="{{ item.resolved }}"></td>
+  </tr>
+  {% endfor %}
+</table>
+<table class="threeTables detailsTable">
+<h1>Units available</h1></hi>
+  <tr>
+    <th>ID</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>Assign</th>
+  </tr>
+    {% for item in all_units %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td>{{ item.latitude }}</td>
+    <td>{{ item.longitude }}</td>
+  <td><button type = "button" id="buttonDetails" onclick=changeColor()>Resolve</button></td>
+  </tr>
+  {% endfor %}
+</table>
+</body>
+</html>
+
+

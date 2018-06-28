@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Incidents</title>
+     <link rel="stylesheet" type="text/css" href="{% static 'map/style.css' %}"/>
+</head>
+<script>
+function setURL(url){
+    document.getElementById('details').src = url;
+}
+</script>
+<body>
+<ul>
+  <li><a href="/map/">Map</a></li>
+  <li><a class="active" href="/map/accidents">Records</a></li>
+  <li style="float:right"><a href="/admin/">Admin</a></li>
+</ul>
+<div class="split left">
+<div id="allTables">
+<table class="threeTables">
+  <tr>
+    <th>ID</th>
+    <th>Priority</th>
+    <th>Timestamp</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>See more</th>
+  </tr>
+    {% for item in ordered_incidents %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td>{{ item.accidentsPriority }}</td>
+    <td>{{ item.timestamp }}</td>
+    <td>{{ item.latitude }}</td>
+    <td>{{ item.longitude }}</td>
+    <td><button type = "button" id="buttonDetails" onclick=setURL("http://127.0.0.1:8000/map/accidents/{{ item.id }}")>Details</button></td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+</div>
+<div class="split right">
+    <iframe id="details" width="500" height="500" style="float:right;"></iframe>
+</div>
+</body>
+</html>
