@@ -55,10 +55,10 @@ priority['1'] = fuzz.trimf(priority.universe, [0,1,2])
 priority['2'] = fuzz.trimf(priority.universe, [1,2,2])
 
 #priority.view()
-
-rule1 = ctrl.Rule(speed['good'] | rpm['good'] | airtemp['good'], priority['2'])
-rule2 = ctrl.Rule(speed['average'] | rpm['average'], priority['1'])
-rule3 = ctrl.Rule(speed['poor'] | rpm['poor'], priority['0'])
+#airtemp['good']
+rule1 = ctrl.Rule(speed['good'] & rpm['good'] , priority['2'])
+rule2 = ctrl.Rule(speed['average'] & rpm['average'], priority['1'])
+rule3 = ctrl.Rule(speed['poor'] & rpm['poor'], priority['0'])
 
 prioritizing_ctrl = ctrl.ControlSystem([rule1, rule2, rule3])
 prioritizing = ctrl.ControlSystemSimulation(prioritizing_ctrl)
@@ -76,15 +76,11 @@ for row in cursor2:
     
 print(str(data[0])+" "+str(data[1]));
 print(str(data2[0])+" "+str(data2[1]));
-#identify if the data lead to an accident case
-case=""
-if data[0]>data[1] and data[0]-data[1]>60 :
-    case ="speed"
-else if data2[0]>data2[1] and data2[0]-data2[1]>1500:
-    case="rpm"
+
 #if the accident was detected, compute the priority
-if case!="":
-    prioritizing.input[case] = data[0]-data[1]
+if data[0]>data[1] and data[0]-data[1]>60 and data2[0]>data2[1] and data2[0]-data2[1]>1500:
+    prioritizing.input['speed'] = data[0]-data[1]
+    prioritizing.input['rpm'] = data2[0]-data2[1]
     prioritizing.compute()
     priorityOfTheAccident = int(round(prioritizing.output['priority']))
     print prioritizing.output['priority']
